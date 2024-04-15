@@ -1,16 +1,37 @@
-import express from 'express';
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import compression from 'compression'
+import cors from 'cors'
+import mongoose from 'mongoose'
 
-const app = express();
+import router from './router'
 
-app.use(express.json()); //middleware that transforms req.body in format json
+const app = express()
 
-const PORT = 3000;
+app.use(cors({
+  credentials: true
+}))
 
-app.get('/', (_req,res) => {
-    console.log('Here goes the PING');
-    res.send('PONG');
-});
+app.use(compression())
+app.use(cookieParser())
+
+app.use(express.json()) // middleware that transforms req.body in format json
+
+const PORT = 3000
+
+const MONGO_URL = 'mongodb+srv://admin:K52HFBf4SBE9Cl9l@cluster0.rmic8tw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+
+mongoose.Promise = Promise
+mongoose.connect(MONGO_URL)
+mongoose.connection.on('error', (error: Error) => console.log(error))
+
+app.use('/', router())
+
+/* app.get('/', (_req, res) => {
+  console.log('Here goes the PING')
+  res.send('PONG')
+}) */
 
 app.listen(PORT, () => {
-    console.log(`Running on port ${PORT}`);
-});
+  console.log(`Running on port ${PORT}`)
+})
