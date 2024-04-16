@@ -13,13 +13,13 @@ export const newSolution = async (req: express.Request, res: express.Response) =
       return res.sendStatus(400)
     }
 
-    const user = await createSolution({
+    const solution = await createSolution({
       userId: UserId,
       name,
       comment
     })
 
-    return res.status(200).json(user).end()
+    return res.status(200).json(solution).end()
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
