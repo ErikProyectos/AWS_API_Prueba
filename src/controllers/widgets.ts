@@ -3,19 +3,33 @@
 import express from 'express'
 import { createWidget, deleteWidgetById, getWidgetById, getwidgetssByScreenId } from '../db/widgets'
 
+const typesOfWidgets = ['barGraph', 'pieGraph', 'table', 'card']
+
 export const newWidget = async (req: express.Request, res: express.Response) => {
   try {
     const { name, screenId, type } = req.body
-
-    if (!screenId || !name) {
+    let widget: any
+    if (!screenId || !name || !type) {
       return res.sendStatus(400)
     }
 
-    const widget = await createWidget({
-      screenId,
-      name,
-      type
-    })
+    if (!typesOfWidgets.includes(type)) {
+      const src = ''
+      widget = await createWidget({
+        screenId,
+        name,
+        type,
+        src
+      })
+    } else {
+      const values: any[] = []
+      widget = await createWidget({
+        screenId,
+        name,
+        type,
+        values
+      })
+    }
 
     return res.status(200).json(widget).end()
   } catch (error) {

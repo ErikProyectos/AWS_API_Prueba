@@ -6,7 +6,10 @@ import { WidgetTypes } from '../types'
 const WidgetsSchema = new mongoose.Schema({
   name: { type: String, required: true },
   screenId: { type: mongoose.Types.ObjectId, ref: 'Screen' },
-  type: { type: String, required: true, enum: WidgetTypes }
+  type: { type: String, required: true, enum: WidgetTypes },
+  src: { type: String },
+  values: { type: Array, any: [mongoose.Schema.Types.Mixed], default: undefined }
+
 })
 
 export const WidgetModel = mongoose.model('Widget', WidgetsSchema)
