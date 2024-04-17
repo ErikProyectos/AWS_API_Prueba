@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ignore": "ls controllers | grep -v 'AWS' | xargs npm run dev",
     "dev": "ts-node-dev src/index.ts",
+    "eslint": "ts-standard",
     "start": "node build/index.js",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,11 +15,36 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.137",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
     "@types/express": "4.17.21",
-    "ts-node-dev": "^2.0.0",
+    "@types/lodash": "^4.17.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/uuid": "^9.0.8",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "serverless-plugin-typescript": "^2.1.5",
+    "ts-node-dev": "2.0.0",
+    "ts-standard": "12.0.2",
     "typescript": "5.4.5"
   },
   "dependencies": {
-    "express": "4.19.2"
+    "aws-lambda": "^1.0.7",
+    "express": "4.19.2",
+    "lodash": "^4.17.21",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.1",
+    "yup": "^1.4.0"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "./node_modules/ts-standard/eslintrc.json"
+    ]
   }
 }

@@ -1,0 +1,3678 @@
+{
+  "service": {
+    "service": "aizon-api",
+    "serviceObject": {
+      "name": "aizon-api"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs20.x",
+      "region": "eu-central-1",
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:Scan"
+              ],
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "UsersTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::GetAtt": [
+                    "SolutionsTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::GetAtt": [
+                    "ScreensTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsTable",
+                    "Arn"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "stage": "dev",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "IsAuthenticatedAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-isAuthenticatedAWS"
+            }
+          },
+          "RegisterAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-registerAWS"
+            }
+          },
+          "LoginAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-loginAWS"
+            }
+          },
+          "GetAllUsersAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getAllUsersAWS"
+            }
+          },
+          "DeleteUserAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-deleteUserAWS"
+            }
+          },
+          "UpdateUserAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-updateUserAWS"
+            }
+          },
+          "NewSolutionAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-newSolutionAWS"
+            }
+          },
+          "GetAllSolutionsByUserAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getAllSolutionsByUserAWS"
+            }
+          },
+          "GetOneSolutionByIdAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getOneSolutionByIdAWS"
+            }
+          },
+          "DeleteSolutionAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-deleteSolutionAWS"
+            }
+          },
+          "UpdateSolutionAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-updateSolutionAWS"
+            }
+          },
+          "GetAllScreensBySolutionAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getAllScreensBySolutionAWS"
+            }
+          },
+          "GetOneScreenByIdAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getOneScreenByIdAWS"
+            }
+          },
+          "NewScreenAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-newScreenAWS"
+            }
+          },
+          "DeleteScreenAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-deleteScreenAWS"
+            }
+          },
+          "UpdateScreenAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-updateScreenAWS"
+            }
+          },
+          "NewWidgetAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-newWidgetAWS"
+            }
+          },
+          "GetAllWidgetsByScreenAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getAllWidgetsByScreenAWS"
+            }
+          },
+          "GetOneWidgetByIdAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-getOneWidgetByIdAWS"
+            }
+          },
+          "DeleteWidgetAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-deleteWidgetAWS"
+            }
+          },
+          "UpdateWidgetAWSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aizon-api-dev-updateWidgetAWS"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "aizon-api",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aizon-api-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aizon-api-dev*:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][0]"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "aizon-api",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "IsAuthenticatedAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/middlewares/indexAWS.isAuthenticatedAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-isAuthenticatedAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "IsAuthenticatedAWSLogGroup"
+            ]
+          },
+          "RegisterAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/authenticationAWS.registerAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-registerAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "RegisterAWSLogGroup"
+            ]
+          },
+          "LoginAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/authenticationAWS.loginAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-loginAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "LoginAWSLogGroup"
+            ]
+          },
+          "GetAllUsersAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/usersAWS.getAllUsersAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getAllUsersAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetAllUsersAWSLogGroup"
+            ]
+          },
+          "DeleteUserAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/usersAWS.deleteUserAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-deleteUserAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteUserAWSLogGroup"
+            ]
+          },
+          "UpdateUserAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/usersAWS.updateUserAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-updateUserAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateUserAWSLogGroup"
+            ]
+          },
+          "NewSolutionAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/solutionsAWS.newSolutionAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-newSolutionAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "NewSolutionAWSLogGroup"
+            ]
+          },
+          "GetAllSolutionsByUserAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/solutionsAWS.getAllSolutionsByUserAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getAllSolutionsByUserAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetAllSolutionsByUserAWSLogGroup"
+            ]
+          },
+          "GetOneSolutionByIdAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/solutionsAWS.getOneSolutionByIdAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getOneSolutionByIdAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetOneSolutionByIdAWSLogGroup"
+            ]
+          },
+          "DeleteSolutionAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/solutionsAWS.deleteSolutionAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-deleteSolutionAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteSolutionAWSLogGroup"
+            ]
+          },
+          "UpdateSolutionAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/solutionsAWS.updateSolutionAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-updateSolutionAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateSolutionAWSLogGroup"
+            ]
+          },
+          "GetAllScreensBySolutionAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/screensAWS.getAllScreensBySolutionAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getAllScreensBySolutionAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetAllScreensBySolutionAWSLogGroup"
+            ]
+          },
+          "GetOneScreenByIdAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/screensAWS.getOneScreenByIdAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getOneScreenByIdAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetOneScreenByIdAWSLogGroup"
+            ]
+          },
+          "NewScreenAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/screensAWS.newScreenAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-newScreenAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "NewScreenAWSLogGroup"
+            ]
+          },
+          "DeleteScreenAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/screensAWS.deleteScreenAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-deleteScreenAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteScreenAWSLogGroup"
+            ]
+          },
+          "UpdateScreenAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/screensAWS.updateScreenAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-updateScreenAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateScreenAWSLogGroup"
+            ]
+          },
+          "NewWidgetAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/widgetsAWS.newWidgetAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-newWidgetAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "NewWidgetAWSLogGroup"
+            ]
+          },
+          "GetAllWidgetsByScreenAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/widgetsAWS.getAllWidgetsByScreenAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getAllWidgetsByScreenAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetAllWidgetsByScreenAWSLogGroup"
+            ]
+          },
+          "GetOneWidgetByIdAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/widgetsAWS.getOneWidgetByIdAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-getOneWidgetByIdAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetOneWidgetByIdAWSLogGroup"
+            ]
+          },
+          "DeleteWidgetAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/widgetsAWS.deleteWidgetAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-deleteWidgetAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteWidgetAWSLogGroup"
+            ]
+          },
+          "UpdateWidgetAWSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
+              },
+              "Handler": "src/controllers/widgetsAWS.updateWidgetAWS",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "aizon-api-dev-updateWidgetAWS",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateWidgetAWSLogGroup"
+            ]
+          },
+          "IsAuthenticatedAWSLambdaVersionowJceKlATV7x6FuX1pkTu43imRlNW1fCeduQxnIPU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "IsAuthenticatedAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "RegisterAWSLambdaVersion65KKUg7Ot1w4GUgHYSsJoEdaw1bfXxHdaz3ZoSQMFO0": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "RegisterAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "LoginAWSLambdaVersioncwkgCefN833oxsiwYDDr6lXudFm0EG3QmoG7W61wF3Q": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "LoginAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetAllUsersAWSLambdaVersionXQHiDeXJPTmQ0El1RoOHaPLvjxnUV3mbgc10SbKmw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetAllUsersAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "DeleteUserAWSLambdaVersiondv9yFc2dqho7mifVa55a8Yx7lCxLY5cFVdBVqUVT7A": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteUserAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "UpdateUserAWSLambdaVersionjq7SXdEfUEdmas89AkruCHhlEFHmvtX6cD2p9Vsxs": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateUserAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "NewSolutionAWSLambdaVersion90OdcuDWBWzSkEEGtgiEj4fbAw13hZ1llnY8gvJM": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "NewSolutionAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetAllSolutionsByUserAWSLambdaVersionA9Hi2R2DvhfZqjMqx1xgmS4whjhfg74Y0b1SyRHVOq8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetAllSolutionsByUserAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetOneSolutionByIdAWSLambdaVersionJJ3mii17HPhxe7XFA53sd3UcrqyD7TITTNVNvQEfFc": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetOneSolutionByIdAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "DeleteSolutionAWSLambdaVersionqNNZyEDcn9Gy51IwQuP4t2Nt1YvBbzeWhjVTwHML0": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteSolutionAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "UpdateSolutionAWSLambdaVersionfupZM2nCWG9mfjKaN2PFfSysOM0L74ZM2BRvTNWHTwE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateSolutionAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetAllScreensBySolutionAWSLambdaVersionAuXZILATylhGi1PsH1bpS0mnzE56TkEvmp7oImwchw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetAllScreensBySolutionAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetOneScreenByIdAWSLambdaVersionmekPB80ceN6YyI11h2xJgY7BXpRF6RTSM4pMJLuwXA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetOneScreenByIdAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "NewScreenAWSLambdaVersionazuRz6SQbTlvXobDsXKw5sHPNKRNaIAin0jO4UU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "NewScreenAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "DeleteScreenAWSLambdaVersionnDHXkNiDq3jaukpQdWVoaRc4j0OtERs7MvMGTWnNo": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteScreenAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "UpdateScreenAWSLambdaVersionmLRUagv28ucoQI6i1FFDLYCaqMCMM2UTJu4zR84wPQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateScreenAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "NewWidgetAWSLambdaVersionXx6hDDNYSjmWAgN0nB8HwtU0b5VjFovN89M9ytPhI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "NewWidgetAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetAllWidgetsByScreenAWSLambdaVersionFbZeqclm9mIZBg86iZSns2SokjfccfUeMfj7Vnp2uxI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetAllWidgetsByScreenAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "GetOneWidgetByIdAWSLambdaVersionWFmfUDtAvjXJrvcTqekMdi31kqp7Ne3cRrfpefvxg": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetOneWidgetByIdAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "DeleteWidgetAWSLambdaVersionXgzMlmdo43r74FsYqkDrH6CYKeMJK9bNZVPu3FRA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteWidgetAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "UpdateWidgetAWSLambdaVersion2PLCWqhT2bbXJpA1DLDMdjisgA4pRIM0GbimSal9UEU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateWidgetAWSLambdaFunction"
+              },
+              "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-aizon-api",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "IsAuthenticatedAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "IsAuthenticatedAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationIsAuthenticatedAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"IsAuthenticatedAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteAny": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "ANY /",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationIsAuthenticatedAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationIsAuthenticatedAWS"
+          },
+          "RegisterAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "RegisterAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationRegisterAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"RegisterAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostAuthRegister": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /auth/register",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationRegisterAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationRegisterAWS"
+          },
+          "LoginAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoginAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationLoginAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"LoginAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostAuthLogin": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /auth/login",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationLoginAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationLoginAWS"
+          },
+          "GetAllUsersAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetAllUsersAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetAllUsersAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetAllUsersAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetUsers": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /users",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetAllUsersAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetAllUsersAWS"
+          },
+          "DeleteUserAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteUserAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationDeleteUserAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteUserAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDeleteUsersIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "DELETE /users/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationDeleteUserAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationDeleteUserAWS"
+          },
+          "UpdateUserAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateUserAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationUpdateUserAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateUserAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePutUsersIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "PUT /users/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationUpdateUserAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationUpdateUserAWS"
+          },
+          "NewSolutionAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "NewSolutionAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationNewSolutionAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"NewSolutionAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostSolutions": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /solutions",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationNewSolutionAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationNewSolutionAWS"
+          },
+          "GetAllSolutionsByUserAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetAllSolutionsByUserAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetAllSolutionsByUserAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetAllSolutionsByUserAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetSolutions": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /solutions",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetAllSolutionsByUserAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetAllSolutionsByUserAWS"
+          },
+          "GetOneSolutionByIdAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetOneSolutionByIdAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetOneSolutionByIdAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetOneSolutionByIdAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetSolutionsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /solutions/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetOneSolutionByIdAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetOneSolutionByIdAWS"
+          },
+          "DeleteSolutionAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteSolutionAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationDeleteSolutionAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteSolutionAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDeleteSolutionsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "DELETE /solutions/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationDeleteSolutionAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationDeleteSolutionAWS"
+          },
+          "UpdateSolutionAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateSolutionAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationUpdateSolutionAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateSolutionAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePutSolutionsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "PUT /solutions/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationUpdateSolutionAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationUpdateSolutionAWS"
+          },
+          "GetAllScreensBySolutionAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetAllScreensBySolutionAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetAllScreensBySolutionAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetAllScreensBySolutionAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetScreens": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /screens",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetAllScreensBySolutionAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetAllScreensBySolutionAWS"
+          },
+          "GetOneScreenByIdAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetOneScreenByIdAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetOneScreenByIdAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetOneScreenByIdAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetScreensIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /screens/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetOneScreenByIdAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetOneScreenByIdAWS"
+          },
+          "NewScreenAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "NewScreenAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationNewScreenAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"NewScreenAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostScreens": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /screens",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationNewScreenAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationNewScreenAWS"
+          },
+          "DeleteScreenAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteScreenAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationDeleteScreenAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteScreenAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDeleteScreensIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "DELETE /screens/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationDeleteScreenAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationDeleteScreenAWS"
+          },
+          "UpdateScreenAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateScreenAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationUpdateScreenAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateScreenAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePutScreensIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "PUT /screens/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationUpdateScreenAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationUpdateScreenAWS"
+          },
+          "NewWidgetAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "NewWidgetAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationNewWidgetAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"NewWidgetAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePostWidgets": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "POST /widgets",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationNewWidgetAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationNewWidgetAWS"
+          },
+          "GetAllWidgetsByScreenAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetAllWidgetsByScreenAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetAllWidgetsByScreenAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetAllWidgetsByScreenAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetWidgets": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /widgets",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetAllWidgetsByScreenAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetAllWidgetsByScreenAWS"
+          },
+          "GetOneWidgetByIdAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetOneWidgetByIdAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetOneWidgetByIdAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetOneWidgetByIdAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetWidgetsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /widgets/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetOneWidgetByIdAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetOneWidgetByIdAWS"
+          },
+          "DeleteWidgetAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteWidgetAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationDeleteWidgetAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"DeleteWidgetAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDeleteWidgetsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "DELETE /widgets/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationDeleteWidgetAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationDeleteWidgetAWS"
+          },
+          "UpdateWidgetAWSLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateWidgetAWSLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationUpdateWidgetAWS": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"UpdateWidgetAWSLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePutWidgetsIdVar": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "PUT /widgets/{id}",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationUpdateWidgetAWS"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationUpdateWidgetAWS"
+          },
+          "UsersTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "UsersTable",
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              },
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "_id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "_id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          },
+          "SolutionsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "SolutionsTable",
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              },
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "_id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "_id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          },
+          "ScreensTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "ScreensTable",
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              },
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "_id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "_id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          },
+          "WidgetsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "WidgetsTable",
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              },
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "_id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "_id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "IsAuthenticatedAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "IsAuthenticatedAWSLambdaVersionowJceKlATV7x6FuX1pkTu43imRlNW1fCeduQxnIPU"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-IsAuthenticatedAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "RegisterAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "RegisterAWSLambdaVersion65KKUg7Ot1w4GUgHYSsJoEdaw1bfXxHdaz3ZoSQMFO0"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-RegisterAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "LoginAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoginAWSLambdaVersioncwkgCefN833oxsiwYDDr6lXudFm0EG3QmoG7W61wF3Q"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-LoginAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetAllUsersAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetAllUsersAWSLambdaVersionXQHiDeXJPTmQ0El1RoOHaPLvjxnUV3mbgc10SbKmw"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetAllUsersAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteUserAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteUserAWSLambdaVersiondv9yFc2dqho7mifVa55a8Yx7lCxLY5cFVdBVqUVT7A"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-DeleteUserAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateUserAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateUserAWSLambdaVersionjq7SXdEfUEdmas89AkruCHhlEFHmvtX6cD2p9Vsxs"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-UpdateUserAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "NewSolutionAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "NewSolutionAWSLambdaVersion90OdcuDWBWzSkEEGtgiEj4fbAw13hZ1llnY8gvJM"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-NewSolutionAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetAllSolutionsByUserAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetAllSolutionsByUserAWSLambdaVersionA9Hi2R2DvhfZqjMqx1xgmS4whjhfg74Y0b1SyRHVOq8"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetAllSolutionsByUserAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetOneSolutionByIdAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetOneSolutionByIdAWSLambdaVersionJJ3mii17HPhxe7XFA53sd3UcrqyD7TITTNVNvQEfFc"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetOneSolutionByIdAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteSolutionAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteSolutionAWSLambdaVersionqNNZyEDcn9Gy51IwQuP4t2Nt1YvBbzeWhjVTwHML0"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-DeleteSolutionAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateSolutionAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateSolutionAWSLambdaVersionfupZM2nCWG9mfjKaN2PFfSysOM0L74ZM2BRvTNWHTwE"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-UpdateSolutionAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetAllScreensBySolutionAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetAllScreensBySolutionAWSLambdaVersionAuXZILATylhGi1PsH1bpS0mnzE56TkEvmp7oImwchw"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetAllScreensBySolutionAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetOneScreenByIdAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetOneScreenByIdAWSLambdaVersionmekPB80ceN6YyI11h2xJgY7BXpRF6RTSM4pMJLuwXA"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetOneScreenByIdAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "NewScreenAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "NewScreenAWSLambdaVersionazuRz6SQbTlvXobDsXKw5sHPNKRNaIAin0jO4UU"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-NewScreenAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteScreenAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteScreenAWSLambdaVersionnDHXkNiDq3jaukpQdWVoaRc4j0OtERs7MvMGTWnNo"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-DeleteScreenAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateScreenAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateScreenAWSLambdaVersionmLRUagv28ucoQI6i1FFDLYCaqMCMM2UTJu4zR84wPQ"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-UpdateScreenAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "NewWidgetAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "NewWidgetAWSLambdaVersionXx6hDDNYSjmWAgN0nB8HwtU0b5VjFovN89M9ytPhI"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-NewWidgetAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetAllWidgetsByScreenAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetAllWidgetsByScreenAWSLambdaVersionFbZeqclm9mIZBg86iZSns2SokjfccfUeMfj7Vnp2uxI"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetAllWidgetsByScreenAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetOneWidgetByIdAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetOneWidgetByIdAWSLambdaVersionWFmfUDtAvjXJrvcTqekMdi31kqp7Ne3cRrfpefvxg"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-GetOneWidgetByIdAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteWidgetAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteWidgetAWSLambdaVersionXgzMlmdo43r74FsYqkDrH6CYKeMJK9bNZVPu3FRA"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-DeleteWidgetAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateWidgetAWSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateWidgetAWSLambdaVersion2PLCWqhT2bbXJpA1DLDMdjisgA4pRIM0GbimSal9UEU"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-UpdateWidgetAWSLambdaFunctionQualifiedArn"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-aizon-api-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "plugins": [
+      "serverless-plugin-typescript"
+    ],
+    "pluginsData": {},
+    "functions": {
+      "isAuthenticatedAWS": {
+        "handler": "src/middlewares/indexAWS.isAuthenticatedAWS",
+        "events": [
+          {
+            "httpApi": "ANY /",
+            "resolvedMethod": "ANY",
+            "resolvedPath": "/"
+          }
+        ],
+        "name": "aizon-api-dev-isAuthenticatedAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "IsAuthenticatedAWSLambdaVersionowJceKlATV7x6FuX1pkTu43imRlNW1fCeduQxnIPU"
+      },
+      "registerAWS": {
+        "handler": "src/controllers/authenticationAWS.registerAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/auth/register",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/auth/register"
+          }
+        ],
+        "name": "aizon-api-dev-registerAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "RegisterAWSLambdaVersion65KKUg7Ot1w4GUgHYSsJoEdaw1bfXxHdaz3ZoSQMFO0"
+      },
+      "loginAWS": {
+        "handler": "src/controllers/authenticationAWS.loginAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/auth/login",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/auth/login"
+          }
+        ],
+        "name": "aizon-api-dev-loginAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "LoginAWSLambdaVersioncwkgCefN833oxsiwYDDr6lXudFm0EG3QmoG7W61wF3Q"
+      },
+      "getAllUsersAWS": {
+        "handler": "src/controllers/usersAWS.getAllUsersAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/users",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/users"
+          }
+        ],
+        "name": "aizon-api-dev-getAllUsersAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetAllUsersAWSLambdaVersionXQHiDeXJPTmQ0El1RoOHaPLvjxnUV3mbgc10SbKmw"
+      },
+      "deleteUserAWS": {
+        "handler": "src/controllers/usersAWS.deleteUserAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/users/{id}",
+              "method": "delete"
+            },
+            "resolvedMethod": "DELETE",
+            "resolvedPath": "/users/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-deleteUserAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteUserAWSLambdaVersiondv9yFc2dqho7mifVa55a8Yx7lCxLY5cFVdBVqUVT7A"
+      },
+      "updateUserAWS": {
+        "handler": "src/controllers/usersAWS.updateUserAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/users/{id}",
+              "method": "put"
+            },
+            "resolvedMethod": "PUT",
+            "resolvedPath": "/users/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-updateUserAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateUserAWSLambdaVersionjq7SXdEfUEdmas89AkruCHhlEFHmvtX6cD2p9Vsxs"
+      },
+      "newSolutionAWS": {
+        "handler": "src/controllers/solutionsAWS.newSolutionAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/solutions",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/solutions"
+          }
+        ],
+        "name": "aizon-api-dev-newSolutionAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "NewSolutionAWSLambdaVersion90OdcuDWBWzSkEEGtgiEj4fbAw13hZ1llnY8gvJM"
+      },
+      "getAllSolutionsByUserAWS": {
+        "handler": "src/controllers/solutionsAWS.getAllSolutionsByUserAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/solutions",
+              "method": "get",
+              "authorizer": null
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/solutions"
+          }
+        ],
+        "name": "aizon-api-dev-getAllSolutionsByUserAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetAllSolutionsByUserAWSLambdaVersionA9Hi2R2DvhfZqjMqx1xgmS4whjhfg74Y0b1SyRHVOq8"
+      },
+      "getOneSolutionByIdAWS": {
+        "handler": "src/controllers/solutionsAWS.getOneSolutionByIdAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/solutions/{id}",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/solutions/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-getOneSolutionByIdAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetOneSolutionByIdAWSLambdaVersionJJ3mii17HPhxe7XFA53sd3UcrqyD7TITTNVNvQEfFc"
+      },
+      "deleteSolutionAWS": {
+        "handler": "src/controllers/solutionsAWS.deleteSolutionAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/solutions/{id}",
+              "method": "delete"
+            },
+            "resolvedMethod": "DELETE",
+            "resolvedPath": "/solutions/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-deleteSolutionAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteSolutionAWSLambdaVersionqNNZyEDcn9Gy51IwQuP4t2Nt1YvBbzeWhjVTwHML0"
+      },
+      "updateSolutionAWS": {
+        "handler": "src/controllers/solutionsAWS.updateSolutionAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/solutions/{id}",
+              "method": "put"
+            },
+            "resolvedMethod": "PUT",
+            "resolvedPath": "/solutions/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-updateSolutionAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateSolutionAWSLambdaVersionfupZM2nCWG9mfjKaN2PFfSysOM0L74ZM2BRvTNWHTwE"
+      },
+      "getAllScreensBySolutionAWS": {
+        "handler": "src/controllers/screensAWS.getAllScreensBySolutionAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/screens",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/screens"
+          }
+        ],
+        "name": "aizon-api-dev-getAllScreensBySolutionAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetAllScreensBySolutionAWSLambdaVersionAuXZILATylhGi1PsH1bpS0mnzE56TkEvmp7oImwchw"
+      },
+      "getOneScreenByIdAWS": {
+        "handler": "src/controllers/screensAWS.getOneScreenByIdAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/screens/{id}",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/screens/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-getOneScreenByIdAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetOneScreenByIdAWSLambdaVersionmekPB80ceN6YyI11h2xJgY7BXpRF6RTSM4pMJLuwXA"
+      },
+      "newScreenAWS": {
+        "handler": "src/controllers/screensAWS.newScreenAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/screens",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/screens"
+          }
+        ],
+        "name": "aizon-api-dev-newScreenAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "NewScreenAWSLambdaVersionazuRz6SQbTlvXobDsXKw5sHPNKRNaIAin0jO4UU"
+      },
+      "deleteScreenAWS": {
+        "handler": "src/controllers/screensAWS.deleteScreenAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/screens/{id}",
+              "method": "delete"
+            },
+            "resolvedMethod": "DELETE",
+            "resolvedPath": "/screens/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-deleteScreenAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteScreenAWSLambdaVersionnDHXkNiDq3jaukpQdWVoaRc4j0OtERs7MvMGTWnNo"
+      },
+      "updateScreenAWS": {
+        "handler": "src/controllers/screensAWS.updateScreenAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/screens/{id}",
+              "method": "put"
+            },
+            "resolvedMethod": "PUT",
+            "resolvedPath": "/screens/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-updateScreenAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateScreenAWSLambdaVersionmLRUagv28ucoQI6i1FFDLYCaqMCMM2UTJu4zR84wPQ"
+      },
+      "newWidgetAWS": {
+        "handler": "src/controllers/widgetsAWS.newWidgetAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/widgets",
+              "method": "post"
+            },
+            "resolvedMethod": "POST",
+            "resolvedPath": "/widgets"
+          }
+        ],
+        "name": "aizon-api-dev-newWidgetAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "NewWidgetAWSLambdaVersionXx6hDDNYSjmWAgN0nB8HwtU0b5VjFovN89M9ytPhI"
+      },
+      "getAllWidgetsByScreenAWS": {
+        "handler": "src/controllers/widgetsAWS.getAllWidgetsByScreenAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/widgets",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/widgets"
+          }
+        ],
+        "name": "aizon-api-dev-getAllWidgetsByScreenAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetAllWidgetsByScreenAWSLambdaVersionFbZeqclm9mIZBg86iZSns2SokjfccfUeMfj7Vnp2uxI"
+      },
+      "getOneWidgetByIdAWS": {
+        "handler": "src/controllers/widgetsAWS.getOneWidgetByIdAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/widgets/{id}",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/widgets/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-getOneWidgetByIdAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "GetOneWidgetByIdAWSLambdaVersionWFmfUDtAvjXJrvcTqekMdi31kqp7Ne3cRrfpefvxg"
+      },
+      "deleteWidgetAWS": {
+        "handler": "src/controllers/widgetsAWS.deleteWidgetAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/widgets/{id}",
+              "method": "delete"
+            },
+            "resolvedMethod": "DELETE",
+            "resolvedPath": "/widgets/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-deleteWidgetAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteWidgetAWSLambdaVersionXgzMlmdo43r74FsYqkDrH6CYKeMJK9bNZVPu3FRA"
+      },
+      "updateWidgetAWS": {
+        "handler": "src/controllers/widgetsAWS.updateWidgetAWS",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/widgets/{id}",
+              "method": "put"
+            },
+            "resolvedMethod": "PUT",
+            "resolvedPath": "/widgets/{id}"
+          }
+        ],
+        "name": "aizon-api-dev-updateWidgetAWS",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": [],
+          "patterns": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateWidgetAWSLambdaVersion2PLCWqhT2bbXJpA1DLDMdjisgA4pRIM0GbimSal9UEU"
+      }
+    },
+    "resources": {
+      "Resources": {
+        "UsersTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "UsersTable",
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            },
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "_id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "_id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        },
+        "SolutionsTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "SolutionsTable",
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            },
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "_id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "_id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        },
+        "ScreensTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "ScreensTable",
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            },
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "_id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "_id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        },
+        "WidgetsTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "WidgetsTable",
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            },
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "_id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "_id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        }
+      },
+      "Outputs": {}
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless.yml",
+    "initialServerlessConfig": {
+      "service": "aizon-api",
+      "frameworkVersion": "3",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
+      }
+    },
+    "layers": {},
+    "isDashboardMonitoringPreconfigured": false,
+    "artifact": "/home/erikperdigones/Escritorio/Aizon_API/.build/.serverless/aizon-api.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z",
+    "artifact": "aizon-api.zip"
+  }
+}
