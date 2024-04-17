@@ -75,131 +75,131 @@ provider:
 functions:
 # Authenticator middleware
   isAuthenticatedAWS:
-    handler: src/middlewares/index.isAuthenticatedAWS
+    handler: src/middlewares/indexAWS.isAuthenticatedAWS
     events:
       - httpApi: ANY /
 # Authentication Controller
   registerAWS:
-    handler: src/controllers/authentication.registerAWS
+    handler: src/controllers/authenticationAWS.registerAWS
     events:
       - httpApi:
           path: /auth/register
           method: post
   loginAWS:
-    handler: src/controllers/authentication.loginAWS
+    handler: src/controllers/authenticationAWS.loginAWS
     events:
       - httpApi:
           path: /auth/login
           method: post
 # User Controller
   getAllUsersAWS:
-    handler: src/controllers/users.getAllUsersAWS
+    handler: src/controllers/usersAWS.getAllUsersAWS
     events:
       - httpApi:
           path: /users
           method: get
   deleteUserAWS:
-    handler: src/controllers/users.deleteUserAWS
+    handler: src/controllers/usersAWS.deleteUserAWS
     events:
       - httpApi:
           path: /users/{id}
           method: delete
   updateUserAWS:
-    handler: src/controllers/users.updateUserAWS
+    handler: src/controllers/usersAWS.updateUserAWS
     events:
       - httpApi:
           path: /users/{id}
           method: put
 # Solutions Controller
   newSolutionAWS:
-    handler: src/controllers/solutions.newSolutionAWS
+    handler: src/controllers/solutionsAWS.newSolutionAWS
     events:
       - httpApi:
           path: /solutions
           method: post
   getAllSolutionsByUserAWS:
-    handler: src/controllers/solutions.getAllSolutionsByUserAWS
+    handler: src/controllers/solutionsAWS.getAllSolutionsByUserAWS
     events:
       - httpApi:
           path: /solutions
           method: get
           authorizer:
   getOneSolutionByIdAWS:
-    handler: src/controllers/solutions.getOneSolutionByIdAWS
+    handler: src/controllers/solutionsAWS.getOneSolutionByIdAWS
     events:
       - httpApi:
           path: /solutions/{id}
           method: get
   deleteSolutionAWS:
-    handler: src/controllers/solutions.deleteSolutionAWS
+    handler: src/controllers/solutionsAWS.deleteSolutionAWS
     events:
       - httpApi:
           path: /solutions/{id}
           method: delete
   updateSolutionAWS:
-    handler: src/controllers/solutions.updateSolutionAWS
+    handler: src/controllers/solutionsAWS.updateSolutionAWS
     events:
       - httpApi:
           path: /solutions/{id}
           method: put
 # Screen Controller
   getAllScreensBySolutionAWS:
-    handler: src/controllers/screens.getAllScreensBySolutionAWS
+    handler: src/controllers/screensAWS.getAllScreensBySolutionAWS
     events:
       - httpApi:
           path: /screens
           method: get
   getOneScreenByIdAWS:
-    handler: src/controllers/screens.getOneScreenByIdAWS
+    handler: src/controllers/screensAWS.getOneScreenByIdAWS
     events:
       - httpApi:
           path: /screens/{id}
           method: get
   newScreenAWS:
-    handler: src/controllers/screens.newScreenAWS
+    handler: src/controllers/screensAWS.newScreenAWS
     events:
       - httpApi:
           path: /screens
           method: post
   deleteScreenAWS:
-    handler: src/controllers/screens.deleteScreenAWS
+    handler: src/controllers/screensAWS.deleteScreenAWS
     events:
       - httpApi:
           path: /screens/{id}
           method: delete
   updateScreenAWS:
-    handler: src/controllers/screens.updateScreenAWS
+    handler: src/controllers/screensAWS.updateScreenAWS
     events:
       - httpApi:
           path: /screens/{id}
           method: put
 # Widgets Controller
   newWidgetAWS:
-    handler: src/controllers/widgets.newWidgetAWS
+    handler: src/controllers/widgetsAWS.newWidgetAWS
     events:
       - httpApi:
           path: /widgets
           method: post
   getAllWidgetsByScreenAWS:
-    handler: src/controllers/widgets.getAllWidgetsByScreenAWS
+    handler: src/controllers/widgetsAWS.getAllWidgetsByScreenAWS
     events:
       - httpApi:
           path: /widgets
           method: get
   getOneWidgetByIdAWS:
-    handler: src/controllers/widgets.getOneWidgetByIdAWS
+    handler: src/controllers/widgetsAWS.getOneWidgetByIdAWS
     events:
       - httpApi:
           path: /widgets/{id}
           method: get
   deleteWidgetAWS:
-    handler: src/controllers/widgets.deleteWidgetAWS
+    handler: src/controllers/widgetsAWS.deleteWidgetAWS
     events:
       - httpApi:
           path: /widgets/{id}
           method: delete
   updateWidgetAWS:
-    handler: src/controllers/widgets.updateWidgetAWS
+    handler: src/controllers/widgetsAWS.updateWidgetAWS
     events:
       - httpApi:
           path: /widgets/{id}

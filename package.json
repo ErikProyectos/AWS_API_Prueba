@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ignore": "ls controllers | grep -v 'AWS' | xargs npm run dev",
     "dev": "ts-node-dev src/index.ts",
     "eslint": "ts-standard",
     "start": "node build/index.js",

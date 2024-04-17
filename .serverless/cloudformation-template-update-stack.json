@@ -318,9 +318,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/middlewares/index.isAuthenticatedAWS",
+        "Handler": "src/middlewares/indexAWS.isAuthenticatedAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-isAuthenticatedAWS",
         "MemorySize": 1024,
@@ -343,9 +343,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/authentication.registerAWS",
+        "Handler": "src/controllers/authenticationAWS.registerAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-registerAWS",
         "MemorySize": 1024,
@@ -368,9 +368,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/authentication.loginAWS",
+        "Handler": "src/controllers/authenticationAWS.loginAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-loginAWS",
         "MemorySize": 1024,
@@ -393,9 +393,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/users.getAllUsersAWS",
+        "Handler": "src/controllers/usersAWS.getAllUsersAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getAllUsersAWS",
         "MemorySize": 1024,
@@ -418,9 +418,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/users.deleteUserAWS",
+        "Handler": "src/controllers/usersAWS.deleteUserAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-deleteUserAWS",
         "MemorySize": 1024,
@@ -443,9 +443,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/users.updateUserAWS",
+        "Handler": "src/controllers/usersAWS.updateUserAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-updateUserAWS",
         "MemorySize": 1024,
@@ -468,9 +468,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/solutions.newSolutionAWS",
+        "Handler": "src/controllers/solutionsAWS.newSolutionAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-newSolutionAWS",
         "MemorySize": 1024,
@@ -493,9 +493,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/solutions.getAllSolutionsByUserAWS",
+        "Handler": "src/controllers/solutionsAWS.getAllSolutionsByUserAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getAllSolutionsByUserAWS",
         "MemorySize": 1024,
@@ -518,9 +518,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/solutions.getOneSolutionByIdAWS",
+        "Handler": "src/controllers/solutionsAWS.getOneSolutionByIdAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getOneSolutionByIdAWS",
         "MemorySize": 1024,
@@ -543,9 +543,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/solutions.deleteSolutionAWS",
+        "Handler": "src/controllers/solutionsAWS.deleteSolutionAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-deleteSolutionAWS",
         "MemorySize": 1024,
@@ -568,9 +568,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/solutions.updateSolutionAWS",
+        "Handler": "src/controllers/solutionsAWS.updateSolutionAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-updateSolutionAWS",
         "MemorySize": 1024,
@@ -593,9 +593,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/screens.getAllScreensBySolutionAWS",
+        "Handler": "src/controllers/screensAWS.getAllScreensBySolutionAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getAllScreensBySolutionAWS",
         "MemorySize": 1024,
@@ -618,9 +618,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/screens.getOneScreenByIdAWS",
+        "Handler": "src/controllers/screensAWS.getOneScreenByIdAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getOneScreenByIdAWS",
         "MemorySize": 1024,
@@ -643,9 +643,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/screens.newScreenAWS",
+        "Handler": "src/controllers/screensAWS.newScreenAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-newScreenAWS",
         "MemorySize": 1024,
@@ -668,9 +668,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/screens.deleteScreenAWS",
+        "Handler": "src/controllers/screensAWS.deleteScreenAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-deleteScreenAWS",
         "MemorySize": 1024,
@@ -693,9 +693,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/screens.updateScreenAWS",
+        "Handler": "src/controllers/screensAWS.updateScreenAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-updateScreenAWS",
         "MemorySize": 1024,
@@ -718,9 +718,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/widgets.newWidgetAWS",
+        "Handler": "src/controllers/widgetsAWS.newWidgetAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-newWidgetAWS",
         "MemorySize": 1024,
@@ -743,9 +743,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/widgets.getAllWidgetsByScreenAWS",
+        "Handler": "src/controllers/widgetsAWS.getAllWidgetsByScreenAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getAllWidgetsByScreenAWS",
         "MemorySize": 1024,
@@ -768,9 +768,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/widgets.getOneWidgetByIdAWS",
+        "Handler": "src/controllers/widgetsAWS.getOneWidgetByIdAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-getOneWidgetByIdAWS",
         "MemorySize": 1024,
@@ -793,9 +793,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/widgets.deleteWidgetAWS",
+        "Handler": "src/controllers/widgetsAWS.deleteWidgetAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-deleteWidgetAWS",
         "MemorySize": 1024,
@@ -818,9 +818,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aizon-api/dev/1713376803987-2024-04-17T18:00:03.987Z/aizon-api.zip"
+          "S3Key": "serverless/aizon-api/dev/1713380980715-2024-04-17T19:09:40.715Z/aizon-api.zip"
         },
-        "Handler": "src/controllers/widgets.updateWidgetAWS",
+        "Handler": "src/controllers/widgetsAWS.updateWidgetAWS",
         "Runtime": "nodejs20.x",
         "FunctionName": "aizon-api-dev-updateWidgetAWS",
         "MemorySize": 1024,
@@ -836,214 +836,214 @@
         "UpdateWidgetAWSLogGroup"
       ]
     },
-    "IsAuthenticatedAWSLambdaVersionVejbK1phgG7Vm99M1DsFuH6MDWtL4edf4d725BeV68": {
+    "IsAuthenticatedAWSLambdaVersionowJceKlATV7x6FuX1pkTu43imRlNW1fCeduQxnIPU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "IsAuthenticatedAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "RegisterAWSLambdaVersionv0f1yyedSPm4mKPYYn7DwVB8N7DUjJSVovTvAYEsdk": {
+    "RegisterAWSLambdaVersion65KKUg7Ot1w4GUgHYSsJoEdaw1bfXxHdaz3ZoSQMFO0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "RegisterAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "LoginAWSLambdaVersionhB8HRh2SgboOcNbGNCLAh5VqvXyasrKay8n9JT8ruQ": {
+    "LoginAWSLambdaVersioncwkgCefN833oxsiwYDDr6lXudFm0EG3QmoG7W61wF3Q": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "LoginAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetAllUsersAWSLambdaVersionShrxJDcQc3VHgCkiuB2xxNuudt0sj46vNzwfHB8h3Q": {
+    "GetAllUsersAWSLambdaVersionXQHiDeXJPTmQ0El1RoOHaPLvjxnUV3mbgc10SbKmw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllUsersAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "DeleteUserAWSLambdaVersionTNweIgMrwb1lMilfqmHxVgk8g4ToSd2VPZKmaBJ0sQ": {
+    "DeleteUserAWSLambdaVersiondv9yFc2dqho7mifVa55a8Yx7lCxLY5cFVdBVqUVT7A": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteUserAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "UpdateUserAWSLambdaVersionTie1aKnBVJJ6aog0iDYf2bi1zjl6DSvGBcnlGQyw": {
+    "UpdateUserAWSLambdaVersionjq7SXdEfUEdmas89AkruCHhlEFHmvtX6cD2p9Vsxs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateUserAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "NewSolutionAWSLambdaVersion6QMT9o5Wtds7yiZUtiUFxTkcLZzbiEj1pTXeHQn9oyk": {
+    "NewSolutionAWSLambdaVersion90OdcuDWBWzSkEEGtgiEj4fbAw13hZ1llnY8gvJM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "NewSolutionAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetAllSolutionsByUserAWSLambdaVersion4BBDAvqEL9OFHHMdt06NH1m3EmOyZrnmPFK7IbZ76o": {
+    "GetAllSolutionsByUserAWSLambdaVersionA9Hi2R2DvhfZqjMqx1xgmS4whjhfg74Y0b1SyRHVOq8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllSolutionsByUserAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetOneSolutionByIdAWSLambdaVersioniFw0WpV1ow1VMbOYl1H0eEPqYDN4utvoth3MAHjSM": {
+    "GetOneSolutionByIdAWSLambdaVersionJJ3mii17HPhxe7XFA53sd3UcrqyD7TITTNVNvQEfFc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOneSolutionByIdAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "DeleteSolutionAWSLambdaVersionFXmWI1nfLUFd97TaWwjofsxJqzrqVQAeIXbfcXp0is": {
+    "DeleteSolutionAWSLambdaVersionqNNZyEDcn9Gy51IwQuP4t2Nt1YvBbzeWhjVTwHML0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteSolutionAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "UpdateSolutionAWSLambdaVersionRmJQKZTP74XoLryxSdnSbl8s1K6tDdLFg8mEAdJNM": {
+    "UpdateSolutionAWSLambdaVersionfupZM2nCWG9mfjKaN2PFfSysOM0L74ZM2BRvTNWHTwE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateSolutionAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetAllScreensBySolutionAWSLambdaVersionYQXBXab6uZtGXZytVUuZxQlnw049oq0SANCgrPIVc": {
+    "GetAllScreensBySolutionAWSLambdaVersionAuXZILATylhGi1PsH1bpS0mnzE56TkEvmp7oImwchw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllScreensBySolutionAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetOneScreenByIdAWSLambdaVersionPoGfssPk4ZllEyLEsMSwLeO2ETXQDreRFayaLZCI": {
+    "GetOneScreenByIdAWSLambdaVersionmekPB80ceN6YyI11h2xJgY7BXpRF6RTSM4pMJLuwXA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOneScreenByIdAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "NewScreenAWSLambdaVersionTkZYxVgIGghjgFQzcuDNy3VTOtEpct80NGLrVzr08": {
+    "NewScreenAWSLambdaVersionazuRz6SQbTlvXobDsXKw5sHPNKRNaIAin0jO4UU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "NewScreenAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "DeleteScreenAWSLambdaVersiono0DV6d9z7VsGds1PA7Xv553jt8tJkrns3RzpeYEkPs": {
+    "DeleteScreenAWSLambdaVersionnDHXkNiDq3jaukpQdWVoaRc4j0OtERs7MvMGTWnNo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteScreenAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "UpdateScreenAWSLambdaVersionuOQyBu3JzO0zvdvItstX4iKuIhYVw610drNTcova8": {
+    "UpdateScreenAWSLambdaVersionmLRUagv28ucoQI6i1FFDLYCaqMCMM2UTJu4zR84wPQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateScreenAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "NewWidgetAWSLambdaVersionpKAVj3IAThKEA96TT0iIa5qjUv9D9qCLhv5BTG3to": {
+    "NewWidgetAWSLambdaVersionXx6hDDNYSjmWAgN0nB8HwtU0b5VjFovN89M9ytPhI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "NewWidgetAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetAllWidgetsByScreenAWSLambdaVersionqQD8lOFYB7HPyaJuaZePWhmHKxURNWkXZx2kYWio": {
+    "GetAllWidgetsByScreenAWSLambdaVersionFbZeqclm9mIZBg86iZSns2SokjfccfUeMfj7Vnp2uxI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllWidgetsByScreenAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "GetOneWidgetByIdAWSLambdaVersionxVatowSJFR2yOb2jfxVDKOSZY2COGWS1l5bHN3DGQ8": {
+    "GetOneWidgetByIdAWSLambdaVersionWFmfUDtAvjXJrvcTqekMdi31kqp7Ne3cRrfpefvxg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetOneWidgetByIdAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "DeleteWidgetAWSLambdaVersion6DpMRls0KadihkqvLGKThU1wzgTktfAUXk5qQRjLoyQ": {
+    "DeleteWidgetAWSLambdaVersionXgzMlmdo43r74FsYqkDrH6CYKeMJK9bNZVPu3FRA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteWidgetAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
-    "UpdateWidgetAWSLambdaVersionkphb5ui5zCdzHjLD4jjmb4lT4fmNWvFw0rZ27gUCw": {
+    "UpdateWidgetAWSLambdaVersion2PLCWqhT2bbXJpA1DLDMdjisgA4pRIM0GbimSal9UEU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateWidgetAWSLambdaFunction"
         },
-        "CodeSha256": "LTEkeGqYL4oQY5DWQ2BW88hY7eOe3BLx5QdTad5F2LM="
+        "CodeSha256": "HAF1rzwRfRyvry96nuk0MR8HJ8jQ/Avt4ouJbFDXgj0="
       }
     },
     "HttpApi": {
@@ -2742,7 +2742,7 @@
     "IsAuthenticatedAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "IsAuthenticatedAWSLambdaVersionVejbK1phgG7Vm99M1DsFuH6MDWtL4edf4d725BeV68"
+        "Ref": "IsAuthenticatedAWSLambdaVersionowJceKlATV7x6FuX1pkTu43imRlNW1fCeduQxnIPU"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-IsAuthenticatedAWSLambdaFunctionQualifiedArn"
@@ -2751,7 +2751,7 @@
     "RegisterAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "RegisterAWSLambdaVersionv0f1yyedSPm4mKPYYn7DwVB8N7DUjJSVovTvAYEsdk"
+        "Ref": "RegisterAWSLambdaVersion65KKUg7Ot1w4GUgHYSsJoEdaw1bfXxHdaz3ZoSQMFO0"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-RegisterAWSLambdaFunctionQualifiedArn"
@@ -2760,7 +2760,7 @@
     "LoginAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "LoginAWSLambdaVersionhB8HRh2SgboOcNbGNCLAh5VqvXyasrKay8n9JT8ruQ"
+        "Ref": "LoginAWSLambdaVersioncwkgCefN833oxsiwYDDr6lXudFm0EG3QmoG7W61wF3Q"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-LoginAWSLambdaFunctionQualifiedArn"
@@ -2769,7 +2769,7 @@
     "GetAllUsersAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllUsersAWSLambdaVersionShrxJDcQc3VHgCkiuB2xxNuudt0sj46vNzwfHB8h3Q"
+        "Ref": "GetAllUsersAWSLambdaVersionXQHiDeXJPTmQ0El1RoOHaPLvjxnUV3mbgc10SbKmw"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetAllUsersAWSLambdaFunctionQualifiedArn"
@@ -2778,7 +2778,7 @@
     "DeleteUserAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteUserAWSLambdaVersionTNweIgMrwb1lMilfqmHxVgk8g4ToSd2VPZKmaBJ0sQ"
+        "Ref": "DeleteUserAWSLambdaVersiondv9yFc2dqho7mifVa55a8Yx7lCxLY5cFVdBVqUVT7A"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-DeleteUserAWSLambdaFunctionQualifiedArn"
@@ -2787,7 +2787,7 @@
     "UpdateUserAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateUserAWSLambdaVersionTie1aKnBVJJ6aog0iDYf2bi1zjl6DSvGBcnlGQyw"
+        "Ref": "UpdateUserAWSLambdaVersionjq7SXdEfUEdmas89AkruCHhlEFHmvtX6cD2p9Vsxs"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-UpdateUserAWSLambdaFunctionQualifiedArn"
@@ -2796,7 +2796,7 @@
     "NewSolutionAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "NewSolutionAWSLambdaVersion6QMT9o5Wtds7yiZUtiUFxTkcLZzbiEj1pTXeHQn9oyk"
+        "Ref": "NewSolutionAWSLambdaVersion90OdcuDWBWzSkEEGtgiEj4fbAw13hZ1llnY8gvJM"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-NewSolutionAWSLambdaFunctionQualifiedArn"
@@ -2805,7 +2805,7 @@
     "GetAllSolutionsByUserAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllSolutionsByUserAWSLambdaVersion4BBDAvqEL9OFHHMdt06NH1m3EmOyZrnmPFK7IbZ76o"
+        "Ref": "GetAllSolutionsByUserAWSLambdaVersionA9Hi2R2DvhfZqjMqx1xgmS4whjhfg74Y0b1SyRHVOq8"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetAllSolutionsByUserAWSLambdaFunctionQualifiedArn"
@@ -2814,7 +2814,7 @@
     "GetOneSolutionByIdAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOneSolutionByIdAWSLambdaVersioniFw0WpV1ow1VMbOYl1H0eEPqYDN4utvoth3MAHjSM"
+        "Ref": "GetOneSolutionByIdAWSLambdaVersionJJ3mii17HPhxe7XFA53sd3UcrqyD7TITTNVNvQEfFc"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetOneSolutionByIdAWSLambdaFunctionQualifiedArn"
@@ -2823,7 +2823,7 @@
     "DeleteSolutionAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteSolutionAWSLambdaVersionFXmWI1nfLUFd97TaWwjofsxJqzrqVQAeIXbfcXp0is"
+        "Ref": "DeleteSolutionAWSLambdaVersionqNNZyEDcn9Gy51IwQuP4t2Nt1YvBbzeWhjVTwHML0"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-DeleteSolutionAWSLambdaFunctionQualifiedArn"
@@ -2832,7 +2832,7 @@
     "UpdateSolutionAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateSolutionAWSLambdaVersionRmJQKZTP74XoLryxSdnSbl8s1K6tDdLFg8mEAdJNM"
+        "Ref": "UpdateSolutionAWSLambdaVersionfupZM2nCWG9mfjKaN2PFfSysOM0L74ZM2BRvTNWHTwE"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-UpdateSolutionAWSLambdaFunctionQualifiedArn"
@@ -2841,7 +2841,7 @@
     "GetAllScreensBySolutionAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllScreensBySolutionAWSLambdaVersionYQXBXab6uZtGXZytVUuZxQlnw049oq0SANCgrPIVc"
+        "Ref": "GetAllScreensBySolutionAWSLambdaVersionAuXZILATylhGi1PsH1bpS0mnzE56TkEvmp7oImwchw"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetAllScreensBySolutionAWSLambdaFunctionQualifiedArn"
@@ -2850,7 +2850,7 @@
     "GetOneScreenByIdAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOneScreenByIdAWSLambdaVersionPoGfssPk4ZllEyLEsMSwLeO2ETXQDreRFayaLZCI"
+        "Ref": "GetOneScreenByIdAWSLambdaVersionmekPB80ceN6YyI11h2xJgY7BXpRF6RTSM4pMJLuwXA"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetOneScreenByIdAWSLambdaFunctionQualifiedArn"
@@ -2859,7 +2859,7 @@
     "NewScreenAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "NewScreenAWSLambdaVersionTkZYxVgIGghjgFQzcuDNy3VTOtEpct80NGLrVzr08"
+        "Ref": "NewScreenAWSLambdaVersionazuRz6SQbTlvXobDsXKw5sHPNKRNaIAin0jO4UU"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-NewScreenAWSLambdaFunctionQualifiedArn"
@@ -2868,7 +2868,7 @@
     "DeleteScreenAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteScreenAWSLambdaVersiono0DV6d9z7VsGds1PA7Xv553jt8tJkrns3RzpeYEkPs"
+        "Ref": "DeleteScreenAWSLambdaVersionnDHXkNiDq3jaukpQdWVoaRc4j0OtERs7MvMGTWnNo"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-DeleteScreenAWSLambdaFunctionQualifiedArn"
@@ -2877,7 +2877,7 @@
     "UpdateScreenAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateScreenAWSLambdaVersionuOQyBu3JzO0zvdvItstX4iKuIhYVw610drNTcova8"
+        "Ref": "UpdateScreenAWSLambdaVersionmLRUagv28ucoQI6i1FFDLYCaqMCMM2UTJu4zR84wPQ"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-UpdateScreenAWSLambdaFunctionQualifiedArn"
@@ -2886,7 +2886,7 @@
     "NewWidgetAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "NewWidgetAWSLambdaVersionpKAVj3IAThKEA96TT0iIa5qjUv9D9qCLhv5BTG3to"
+        "Ref": "NewWidgetAWSLambdaVersionXx6hDDNYSjmWAgN0nB8HwtU0b5VjFovN89M9ytPhI"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-NewWidgetAWSLambdaFunctionQualifiedArn"
@@ -2895,7 +2895,7 @@
     "GetAllWidgetsByScreenAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllWidgetsByScreenAWSLambdaVersionqQD8lOFYB7HPyaJuaZePWhmHKxURNWkXZx2kYWio"
+        "Ref": "GetAllWidgetsByScreenAWSLambdaVersionFbZeqclm9mIZBg86iZSns2SokjfccfUeMfj7Vnp2uxI"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetAllWidgetsByScreenAWSLambdaFunctionQualifiedArn"
@@ -2904,7 +2904,7 @@
     "GetOneWidgetByIdAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetOneWidgetByIdAWSLambdaVersionxVatowSJFR2yOb2jfxVDKOSZY2COGWS1l5bHN3DGQ8"
+        "Ref": "GetOneWidgetByIdAWSLambdaVersionWFmfUDtAvjXJrvcTqekMdi31kqp7Ne3cRrfpefvxg"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-GetOneWidgetByIdAWSLambdaFunctionQualifiedArn"
@@ -2913,7 +2913,7 @@
     "DeleteWidgetAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteWidgetAWSLambdaVersion6DpMRls0KadihkqvLGKThU1wzgTktfAUXk5qQRjLoyQ"
+        "Ref": "DeleteWidgetAWSLambdaVersionXgzMlmdo43r74FsYqkDrH6CYKeMJK9bNZVPu3FRA"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-DeleteWidgetAWSLambdaFunctionQualifiedArn"
@@ -2922,7 +2922,7 @@
     "UpdateWidgetAWSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateWidgetAWSLambdaVersionkphb5ui5zCdzHjLD4jjmb4lT4fmNWvFw0rZ27gUCw"
+        "Ref": "UpdateWidgetAWSLambdaVersion2PLCWqhT2bbXJpA1DLDMdjisgA4pRIM0GbimSal9UEU"
       },
       "Export": {
         "Name": "sls-aizon-api-dev-UpdateWidgetAWSLambdaFunctionQualifiedArn"
