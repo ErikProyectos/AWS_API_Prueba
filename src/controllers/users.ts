@@ -3,6 +3,10 @@
 import express from 'express'
 
 import { getUsers, deleteUserById, getUserById } from '../db/users'
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { DynamoDB } from 'aws-sdk'
+
+const dynamoDB = new DynamoDB.DocumentClient()
 
 /**
  * This function retrieves all users asynchronously and returns them as a JSON response if successful,
@@ -28,6 +32,28 @@ export const getAllUsers = async (_req: express.Request, res: express.Response) 
   }
 }
 
+export const getAllUsersAWS = async (_event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    // Realizamos una consulta a la tabla de DynamoDB para obtener todos los usuarios
+    const params: DynamoDB.DocumentClient.ScanInput = {
+      TableName: 'UsersTable' // Nombre de tu tabla en DynamoDB
+    }
+
+    const result = await dynamoDB.scan(params).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result.Items)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
+  }
+}
+
 /**
  * The function `deleteUser` asynchronously deletes a user by ID and returns the deleted user in a JSON
  * response or sends a status code 400 if an error occurs.
@@ -49,6 +75,33 @@ export const deleteUser = async (req: express.Request, res: express.Response) =>
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
+  }
+}
+
+export const deleteUserAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters
+
+    const params: DynamoDB.DocumentClient.DeleteItemInput = {
+      TableName: 'UsersTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id // Suponiendo que 'id' es la clave primaria de tu tabla
+      },
+      ReturnValues: 'ALL_OLD' // Para devolver el elemento eliminado
+    }
+
+    const result = await dynamoDB.delete(params).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result.Attributes)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
   }
 }
 
@@ -84,5 +137,65 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
+  }
+}
+
+export const updateUserAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters
+    const { username } = event.body
+
+    if (!username) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Missing username in request body' })
+      }
+    }
+
+    // Primero obtenemos el usuario de la base de datos
+    const getUserParams: DynamoDB.DocumentClient.GetItemInput = {
+      TableName: 'UsersTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id // Suponiendo que 'id' es la clave primaria de tu tabla
+      }
+    }
+
+    const existingUser = await dynamoDB.get(getUserParams).promise()
+
+    if (!existingUser.Item) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: 'User not found' })
+      }
+    }
+
+    // Actualizamos el nombre de usuario del usuario obtenido
+    const updateUserParams: DynamoDB.DocumentClient.UpdateItemInput = {
+      TableName: 'UsersTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id
+      },
+      UpdateExpression: 'SET #username = :username',
+      ExpressionAttributeNames: {
+        '#username': 'username'
+      },
+      ExpressionAttributeValues: {
+        ':username': username
+      },
+      ReturnValues: 'ALL_NEW' // Para devolver el elemento actualizado
+    }
+
+    const updatedUser = await dynamoDB.update(updateUserParams).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(updatedUser.Attributes)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
   }
 }

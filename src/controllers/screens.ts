@@ -2,6 +2,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import express from 'express'
 import { createScreen, deleteScreenById, getScreenById, getScreensBySolutionId } from '../db/screens'
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { DynamoDB } from 'aws-sdk'
+
+const dynamoDB = new DynamoDB.DocumentClient()
 
 /**
  * The function `newScreen` creates a new screen with specified details and returns it as JSON
@@ -36,6 +40,58 @@ export const newScreen = async (req: express.Request, res: express.Response) => 
   }
 }
 
+export const newScreenAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { name, comment, solutionId } = event.body
+
+    if (!solutionId || !name) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Missing required fields' })
+      }
+    }
+
+    const paramsSearch: DynamoDB.DocumentClient.GetItemInput = {
+      TableName: 'SolutionsTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: solutionId
+      }
+    }
+
+    const result = await dynamoDB.get(paramsSearch).promise()
+
+    if (!result.Item) {
+      return {
+        statusCode: 404, // Not Found
+        body: JSON.stringify({ message: 'Solution not found' })
+      }
+    }
+
+    const params: DynamoDB.DocumentClient.PutItemInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      Item: {
+        _id: Math.random().toString(36).substr(2, 9), // Generar un ID único
+        name,
+        comment,
+        solutionId
+      }
+    }
+
+    await dynamoDB.put(params).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Screen created successfully' })
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500, // Internal Server Error
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
+  }
+}
+
 /**
  * This function retrieves all screens associated with a specific solution ID and sends them as a JSON
  * response.
@@ -58,6 +114,34 @@ export const getAllScreensBySolution = async (req: express.Request, res: express
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
+  }
+}
+
+export const getAllScreensBySolutionAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { solutionId } = event.body
+
+    const params: DynamoDB.DocumentClient.QueryInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      IndexName: 'SolutionIndex', // Nombre de tu índice global secundario en DynamoDB
+      KeyConditionExpression: 'solutionId = :solutionId',
+      ExpressionAttributeValues: {
+        ':solutionId': solutionId
+      }
+    }
+
+    const result = await dynamoDB.query(params).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result.Items)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500, // Internal Server Error
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
   }
 }
 
@@ -86,6 +170,39 @@ export const getOneScreenById = async (req: express.Request, res: express.Respon
   }
 }
 
+export const getOneScreenByIdAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters
+
+    const params: DynamoDB.DocumentClient.GetItemInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id
+      }
+    }
+
+    const result = await dynamoDB.get(params).promise()
+
+    if (!result.Item) {
+      return {
+        statusCode: 404, // Not Found
+        body: JSON.stringify({ message: 'Screen not found' })
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result.Item)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500, // Internal Server Error
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
+  }
+}
+
 /**
  * The function `deleteScreen` deletes a screen by its ID and returns the deleted screen in a JSON
  * response or sends a status code 400 if an error occurs.
@@ -110,6 +227,60 @@ export const deleteScreen = async (req: express.Request, res: express.Response) 
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
+  }
+}
+
+export const deleteScreenAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters
+
+    // Verifica si el ID es válido
+    if (!id) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Missing ID parameter' })
+      }
+    }
+
+    // Consulta la solución existente en DynamoDB
+    const getScreensParams: DynamoDB.DocumentClient.GetItemInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id
+      }
+    }
+
+    const existingScreen = await dynamoDB.get(getScreensParams).promise()
+
+    // Verifica si la solución existe
+    if (!existingScreen.Item) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: 'Screen not found' })
+      }
+    }
+
+    // Elimina la solución de DynamoDB
+    const deleteScreenParams: DynamoDB.DocumentClient.DeleteItemInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id
+      },
+      ReturnValues: 'ALL_OLD' // Para devolver el elemento eliminado
+    }
+
+    const deletedSolution = await dynamoDB.delete(deleteScreenParams).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(deletedSolution.Attributes)
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
   }
 }
 
@@ -141,5 +312,41 @@ export const updateScreen = async (req: express.Request, res: express.Response) 
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
+  }
+}
+
+export const updateScreenAWS = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters
+    const { name, comment } = event.body
+
+    const params: DynamoDB.DocumentClient.UpdateItemInput = {
+      TableName: 'ScreensTable', // Nombre de tu tabla en DynamoDB
+      Key: {
+        _id: id
+      },
+      UpdateExpression: 'SET #name = :name, #comment = :comment',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#comment': 'comment'
+      },
+      ExpressionAttributeValues: {
+        ':name': name,
+        ':comment': comment
+      },
+      ReturnValues: 'ALL_NEW'
+    }
+
+    const updatedScreen = await dynamoDB.update(params).promise()
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(updatedScreen.Attributes)
+    }
+  } catch (error) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Internal server error' })
+    }
   }
 }
